@@ -3,6 +3,13 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends React.Component {
+  constructor(props: {} | Readonly<{}>) {
+    super(props);
+    this.state = {
+      data: '',
+    };
+  }
+  
   componentDidMount() {
     fetch('/api/greeting')
     .then((resp) => {
@@ -11,6 +18,7 @@ class App extends React.Component {
     .then((data)=> {
       // Log the data just to demonstrate the call works.
       console.log(data.name);
+      this.setState({ data: data.name });
     })
     .catch(function(error) {
       console.error("Error fetching: ", error);
@@ -20,9 +28,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
+        <div>Data from server request: {(this.state as any).data}</div>
       </div>
     );
   }
